@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Bangkok</string>
+    
+    <!-- Splash Screen -->
+    <string name="splash_logo">BANGKOK</string>
+    
+    <!-- Welcome Screen -->
+    <string name="welcome_title">Bienvenido a Bangkok</string>
+    <string name="welcome_subtitle">Descubre la mejor ropa de moda con estilo urbano y tendencias únicas</string>
+    <string name="login_button">Iniciar Sesión</string>
+    <string name="register_button">Registrarse</string>
+    
+    <!-- Auth Screen -->
+    <string name="login_title">Iniciar Sesión</string>
+    <string name="register_title">Crear Cuenta</string>
+    <string name="email_hint">Correo electrónico</string>
+    <string name="phone_hint">Teléfono</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="confirm_password_hint">Confirmar contraseña</string>
+    <string name="full_name_hint">Nombre completo</string>
+    <string name="remember_me">Recordarme</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="already_have_account">¿Ya tienes cuenta? Inicia sesión</string>
+    <string name="create_account">Crear cuenta</string>
+    
+    <!-- Profile Screen -->
+    <string name="profile_title">Mi Perfil</string>
+    <string name="edit_profile">Editar perfil</string>
+    <string name="my_orders">Mis pedidos</string>
+    <string name="addresses">Direcciones</string>
+    <string name="payment_methods">Métodos de pago</string>
+    <string name="logout">Cerrar sesión</string>
+    
+    <!-- Common -->
+    <string name="continue_button">Continuar</string>
+    <string name="back_button">Atrás</string>
+    <string name="save_button">Guardar</string>
+    <string name="cancel_button">Cancelar</string>
+</resources>
