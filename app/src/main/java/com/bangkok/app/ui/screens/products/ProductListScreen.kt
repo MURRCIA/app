@@ -41,17 +41,8 @@ fun ProductListScreen(
                 onBackClick = onBackClick
             )
         },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { viewModel.showAddProductDialog() },
-                containerColor = MaterialTheme.colorScheme.primary
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Agregar producto"
-                )
-            }
-        }
+        // El botón de agregar producto solo está disponible en ProductAdminScreen
+        // ProductListScreen es para usuarios normales, no deben poder agregar productos
     ) { paddingValues ->
         Column(
             modifier = Modifier

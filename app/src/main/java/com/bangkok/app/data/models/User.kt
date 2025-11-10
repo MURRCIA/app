@@ -9,6 +9,7 @@ data class User(
     val profileImageUrl: String? = null,
     val registrationDate: String,
     val isEmailVerified: Boolean = false,
+    val role: UserRole = UserRole.USER,
     val preferences: UserPreferences = UserPreferences()
 )
 
@@ -55,6 +56,7 @@ object MockUserData {
         profileImageUrl = null,
         registrationDate = "2024-01-15",
         isEmailVerified = true,
+        role = UserRole.USER,
         preferences = UserPreferences(
             notificationsEnabled = true,
             marketingEmailsEnabled = true,

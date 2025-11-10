@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import com.bangkok.app.data.repository.UserRepository
 import com.bangkok.app.data.SessionManager
+import com.bangkok.app.data.models.UserRole
 
 data class ProfileUiState(
     val user: com.bangkok.app.data.models.User? = null,
@@ -21,6 +22,9 @@ class ProfileViewModel(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
+    
+    private val _isAdmin = MutableStateFlow(false)
+    val isAdmin: StateFlow<Boolean> = _isAdmin.asStateFlow()
 
     init {
         loadUserProfile()
@@ -34,6 +38,8 @@ class ProfileViewModel(
                 val userId = sessionManager.getUserId()
                 if (userId != null) {
                     val user = userRepository.getUserById(userId)
+                    val isAdminUser = userRepository.isAdmin(userId)
+                    _isAdmin.value = isAdminUser
                     _uiState.value = _uiState.value.copy(
                         user = user,
                         isLoading = false,

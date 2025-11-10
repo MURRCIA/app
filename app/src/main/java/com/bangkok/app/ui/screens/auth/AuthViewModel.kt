@@ -185,7 +185,8 @@ class AuthViewModel(
                     password = currentState.password,
                     phone = currentState.phone,
                     registrationDate = registrationDate,
-                    isEmailVerified = false
+                    isEmailVerified = false,
+                    role = com.bangkok.app.data.models.UserRole.USER
                 )
                 
                 val result = userRepository.registerUser(newUser)

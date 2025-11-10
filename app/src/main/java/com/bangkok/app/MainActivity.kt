@@ -22,6 +22,8 @@ import com.bangkok.app.ui.screens.splash.SplashScreen
 import com.bangkok.app.ui.screens.welcome.WelcomeScreen
 import com.bangkok.app.ui.screens.cart.CartScreen
 import com.bangkok.app.ui.screens.products.ProductListScreen
+import com.bangkok.app.ui.screens.products.ProductDetailScreen
+import com.bangkok.app.ui.screens.admin.ProductAdminScreen
 import com.bangkok.app.ui.theme.BangkokTheme
 import com.bangkok.app.data.database.AppDatabase
 import com.bangkok.app.data.SessionManager
@@ -77,9 +79,10 @@ val repositoryModule = module {
 val appModule = module {
     viewModel { com.bangkok.app.ui.screens.auth.AuthViewModel(get(), get()) }
     viewModel { com.bangkok.app.ui.screens.profile.ProfileViewModel(get(), get()) }
-    viewModel { com.bangkok.app.ui.screens.home.HomeViewModel(get(), get()) }
+    viewModel { com.bangkok.app.ui.screens.home.HomeViewModel(get(), get(), get(), get()) }
     viewModel { com.bangkok.app.ui.screens.cart.CartViewModel(get(), get()) }
     viewModel { com.bangkok.app.ui.screens.products.ProductListViewModel(get()) }
+    viewModel { com.bangkok.app.ui.screens.products.ProductDetailViewModel(get(), get(), get()) }
 }
 
 @Composable
@@ -119,7 +122,7 @@ fun BangkokNavigation() {
                     }
                 },
                 onProductClick = { productId ->
-                    navController.navigate("products") {
+                    navController.navigate("product-detail/$productId") {
                         launchSingleTop = true
                     }
                 },
@@ -128,6 +131,9 @@ fun BangkokNavigation() {
                 },
                 onCartClick = {
                     navController.navigate("cart")
+                },
+                onAdminClick = {
+                    navController.navigate("product-admin")
                 }
             )
         }
@@ -149,7 +155,24 @@ fun BangkokNavigation() {
                     navController.popBackStack()
                 },
                 onProductClick = { productId ->
-                    // TODO: Navegar a detalle del producto
+                    navController.navigate("product-detail/$productId") {
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
+        
+        composable("product-detail/{productId}") { backStackEntry ->
+            val productId = backStackEntry.arguments?.getString("productId") ?: ""
+            ProductDetailScreen(
+                productId = productId,
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onProductClick = { similarProductId ->
+                    navController.navigate("product-detail/$similarProductId") {
+                        launchSingleTop = true
+                    }
                 }
             )
         }
@@ -203,10 +226,24 @@ fun BangkokNavigation() {
                 onPaymentMethodsClick = {
                     // TODO: Implementar pantalla de métodos de pago
                 },
+                onAdminClick = {
+                    navController.navigate("product-admin")
+                },
+                onBackClick = {
+                    navController.popBackStack()
+                },
                 onLogoutClick = {
                     navController.navigate("welcome") {
                         popUpTo("profile") { inclusive = true }
                     }
+                }
+            )
+        }
+        
+        composable("product-admin") {
+            ProductAdminScreen(
+                onBackClick = {
+                    navController.popBackStack()
                 }
             )
         }

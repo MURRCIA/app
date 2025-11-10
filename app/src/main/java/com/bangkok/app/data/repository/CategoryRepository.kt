@@ -2,6 +2,7 @@ package com.bangkok.app.data.repository
 
 import com.bangkok.app.data.database.dao.CategoryDao
 import com.bangkok.app.data.database.entities.toCategory
+import com.bangkok.app.data.database.entities.toEntity
 import com.bangkok.app.data.models.Category
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

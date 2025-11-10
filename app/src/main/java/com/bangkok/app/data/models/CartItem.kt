@@ -5,7 +5,8 @@ data class CartItem(
     val userId: String,
     val product: Product,
     val quantity: Int = 1,
-    val addedAt: Long = System.currentTimeMillis()
+    val addedAt: Long = System.currentTimeMillis(),
+    val selectedSize: ProductSize? = null
 ) {
     val totalPrice: Double
         get() = product.price * quantity * (1 - (product.discountPercentage ?: 0) / 100.0)

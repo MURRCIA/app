@@ -2,7 +2,9 @@ package com.bangkok.app.data.repository
 
 import com.bangkok.app.data.database.dao.UserDao
 import com.bangkok.app.data.database.entities.toUser
+import com.bangkok.app.data.database.entities.toEntity
 import com.bangkok.app.data.models.User
+import com.bangkok.app.data.models.UserRole
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -51,6 +53,15 @@ class UserRepository(private val userDao: UserDao) {
     
     suspend fun userExists(email: String): Boolean {
         return userDao.getUserCountByEmail(email) > 0
+    }
+    
+    suspend fun isAdmin(userId: String): Boolean {
+        val user = getUserById(userId)
+        return user?.role == UserRole.ADMIN
+    }
+    
+    suspend fun getUserRole(userId: String): UserRole? {
+        return getUserById(userId)?.role
     }
 }
 

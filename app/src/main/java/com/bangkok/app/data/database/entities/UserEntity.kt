@@ -17,6 +17,7 @@ data class UserEntity(
     val profileImageUrl: String? = null,
     val registrationDate: String,
     val isEmailVerified: Boolean = false,
+    val role: com.bangkok.app.data.models.UserRole = com.bangkok.app.data.models.UserRole.USER,
     val preferences: com.bangkok.app.data.models.UserPreferences = com.bangkok.app.data.models.UserPreferences(),
     val createdAt: Long = System.currentTimeMillis()
 )
@@ -32,6 +33,7 @@ fun UserEntity.toUser(): com.bangkok.app.data.models.User {
         profileImageUrl = profileImageUrl,
         registrationDate = registrationDate,
         isEmailVerified = isEmailVerified,
+        role = role,
         preferences = preferences
     )
 }
@@ -47,6 +49,7 @@ fun com.bangkok.app.data.models.User.toEntity(): UserEntity {
         profileImageUrl = profileImageUrl,
         registrationDate = registrationDate,
         isEmailVerified = isEmailVerified,
+        role = role,
         preferences = preferences
     )
 }

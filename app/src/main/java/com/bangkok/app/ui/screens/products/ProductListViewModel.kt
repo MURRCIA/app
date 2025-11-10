@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import com.bangkok.app.data.repository.ProductRepository
 import com.bangkok.app.data.models.Product
 import com.bangkok.app.data.models.ProductCategory
+import java.util.UUID
 
 data class ProductListUiState(
     val searchQuery: String = "",
@@ -74,7 +75,13 @@ class ProductListViewModel(
     fun addProduct(product: Product) {
         viewModelScope.launch {
             try {
-                productRepository.insertProduct(product)
+                // Generar UUID para el ID si no tiene uno
+                val productWithId = if (product.id.isBlank()) {
+                    product.copy(id = UUID.randomUUID().toString())
+                } else {
+                    product
+                }
+                productRepository.insertProduct(productWithId)
                 _uiState.value = _uiState.value.copy(
                     showAddProductDialog = false,
                     errorMessage = null
@@ -125,7 +132,10 @@ class ProductListViewModel(
     }
     
     fun setEditingProduct(product: Product?) {
-        _uiState.value = _uiState.value.copy(editingProduct = product)
+        _uiState.value = _uiState.value.copy(
+            editingProduct = product,
+            showAddProductDialog = product != null
+        )
     }
     
     fun clearError() {

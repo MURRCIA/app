@@ -29,6 +29,7 @@ data class CartItemEntity(
     val userId: String,
     val productId: String,
     val quantity: Int = 1,
-    val addedAt: Long = System.currentTimeMillis()
+    val addedAt: Long = System.currentTimeMillis(),
+    val selectedSize: String? = null
 )
 

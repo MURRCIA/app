@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.bangkok.app-mergeDebugResources-59:/values-v26/values-v26.xml",
+            "outputFile": "com.bangkok.app-mergeDebugResources-63:/values-v26/values-v26.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\9.0-milestone-1\\transforms\\ba54f074e93d1501e5fd39e03df3a603\\transformed\\appcompat-1.6.1\\res\\values-v26\\values-v26.xml",
+                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\9.0-milestone-1\\transforms\\ef168bd17502850e70e13f762e5668a4\\transformed\\appcompat-1.6.1\\res\\values-v26\\values-v26.xml",
                     "from": {
                         "startLines": "2,3,4,8,12,16",
                         "startColumns": "4,4,4,4,4,4",

@@ -4,7 +4,7 @@
             "outputFile": "com.bangkok.app.test.app-mergeDebugAndroidTestResources-32:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\9.0-milestone-1\\transforms\\8800e62ddc7d77535c0f071545813415\\transformed\\core-1.12.0\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\9.0-milestone-1\\transforms\\a23e64315237a6627669c9e5f02a2e82\\transformed\\core-1.12.0\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

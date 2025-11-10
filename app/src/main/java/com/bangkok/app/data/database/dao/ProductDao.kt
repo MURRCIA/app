@@ -17,6 +17,9 @@ interface ProductDao {
     @Query("SELECT * FROM products WHERE category = :category ORDER BY createdAt DESC")
     fun getProductsByCategory(category: ProductCategory): Flow<List<ProductEntity>>
     
+    @Query("SELECT * FROM products WHERE category = :category AND id != :excludeId ORDER BY createdAt DESC LIMIT :limit")
+    fun getProductsByCategoryExcluding(category: ProductCategory, excludeId: String, limit: Int): Flow<List<ProductEntity>>
+    
     @Query("SELECT * FROM products WHERE isFeatured = 1 ORDER BY createdAt DESC")
     fun getFeaturedProducts(): Flow<List<ProductEntity>>
     

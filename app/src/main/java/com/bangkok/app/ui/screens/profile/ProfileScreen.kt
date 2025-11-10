@@ -32,10 +32,13 @@ fun ProfileScreen(
     onOrdersClick: () -> Unit,
     onAddressesClick: () -> Unit,
     onPaymentMethodsClick: () -> Unit,
+    onAdminClick: () -> Unit = {},
+    onBackClick: () -> Unit = {},
     onLogoutClick: () -> Unit
 ) {
     val viewModel: ProfileViewModel = koinInject()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val isAdmin by viewModel.isAdmin.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -44,7 +47,8 @@ fun ProfileScreen(
     ) {
         BangkokTopBar(
             title = "Mi Perfil",
-            showBackButton = true
+            showBackButton = true,
+            onBackClick = onBackClick
         )
 
         if (uiState.isLoading) {
@@ -66,16 +70,19 @@ fun ProfileScreen(
                 ) {
                     // Profile Header
                     item {
-                        ProfileHeader(user = user, onEditClick = onEditProfileClick)
+                        ProfileHeader(user = user, isAdmin = isAdmin, onEditClick = onEditProfileClick)
                     }
 
                     // Profile Actions
                     item {
                         ProfileActions(
+                            viewModel = viewModel,
+                            isAdmin = isAdmin,
                             onEditProfileClick = onEditProfileClick,
                             onOrdersClick = onOrdersClick,
                             onAddressesClick = onAddressesClick,
                             onPaymentMethodsClick = onPaymentMethodsClick,
+                            onAdminClick = onAdminClick,
                             onLogoutClick = onLogoutClick
                         )
                     }
@@ -88,6 +95,7 @@ fun ProfileScreen(
 @Composable
 fun ProfileHeader(
     user: com.bangkok.app.data.models.User,
+    isAdmin: Boolean,
     onEditClick: () -> Unit
 ) {
     Card(
@@ -150,6 +158,24 @@ fun ProfileHeader(
                 textAlign = TextAlign.Center
             )
 
+            // Badge de administrador
+            if (isAdmin) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Surface(
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                    shape = MaterialTheme.shapes.small
+                ) {
+                    Text(
+                        text = "ADMINISTRADOR",
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            fontWeight = FontWeight.Bold
+                        ),
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
+                    )
+                }
+            }
+
             Spacer(modifier = Modifier.height(16.dp))
 
             // Edit Profile Button
@@ -179,13 +205,16 @@ fun ProfileHeader(
 
 @Composable
 fun ProfileActions(
+    viewModel: ProfileViewModel,
+    isAdmin: Boolean,
     onEditProfileClick: () -> Unit,
     onOrdersClick: () -> Unit,
     onAddressesClick: () -> Unit,
     onPaymentMethodsClick: () -> Unit,
+    onAdminClick: () -> Unit,
     onLogoutClick: () -> Unit
 ) {
-    val profileActions = listOf(
+    val profileActions = mutableListOf(
         ProfileAction(
             title = "Mis pedidos",
             subtitle = "Ver historial de compras",
@@ -217,6 +246,18 @@ fun ProfileActions(
             onClick = { /* TODO: Implement help */ }
         )
     )
+    
+    // Agregar opción de administración solo si es admin
+    if (isAdmin) {
+        profileActions.add(
+            ProfileAction(
+                title = "Administración de Productos",
+                subtitle = "Gestionar productos y catálogo",
+                icon = Icons.Default.AdminPanelSettings,
+                onClick = onAdminClick
+            )
+        )
+    }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -339,6 +380,7 @@ fun ProfileScreenPreview() {
             onOrdersClick = {},
             onAddressesClick = {},
             onPaymentMethodsClick = {},
+            onBackClick = {},
             onLogoutClick = {}
         )
     }

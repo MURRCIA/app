@@ -20,6 +20,8 @@ data class ProductEntity(
     val isFeatured: Boolean = false,
     val isNewArrival: Boolean = false,
     val discountPercentage: Int? = null,
+    val detailedDescription: String? = null,
+    val availableSizes: List<com.bangkok.app.data.models.ProductSize> = emptyList(),
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis()
 )
@@ -36,7 +38,9 @@ fun ProductEntity.toProduct(): com.bangkok.app.data.models.Product {
         tags = tags,
         isFeatured = isFeatured,
         isNewArrival = isNewArrival,
-        discountPercentage = discountPercentage
+        discountPercentage = discountPercentage,
+        detailedDescription = detailedDescription,
+        availableSizes = availableSizes
     )
 }
 
@@ -52,7 +56,9 @@ fun com.bangkok.app.data.models.Product.toEntity(): ProductEntity {
         tags = tags,
         isFeatured = isFeatured,
         isNewArrival = isNewArrival,
-        discountPercentage = discountPercentage
+        discountPercentage = discountPercentage,
+        detailedDescription = detailedDescription,
+        availableSizes = availableSizes
     )
 }
 

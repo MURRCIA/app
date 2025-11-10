@@ -2,10 +2,15 @@ package com.bangkok.app.data.repository
 
 import com.bangkok.app.data.database.dao.ProductDao
 import com.bangkok.app.data.database.entities.toProduct
+import com.bangkok.app.data.database.entities.toEntity
 import com.bangkok.app.data.models.Product
 import com.bangkok.app.data.models.ProductCategory
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 class ProductRepository(private val productDao: ProductDao) {
     
@@ -67,6 +72,26 @@ class ProductRepository(private val productDao: ProductDao) {
     
     suspend fun deleteProductById(productId: String) {
         productDao.deleteProductById(productId)
+    }
+    
+    @OptIn(ExperimentalCoroutinesApi::class)
+    fun getSimilarProducts(productId: String, limit: Int = 10): Flow<List<Product>> {
+        return flow {
+            val productEntity = productDao.getProductById(productId)
+            emit(productEntity?.category)
+        }.flatMapLatest { category ->
+            if (category != null) {
+                productDao.getProductsByCategoryExcluding(
+                    category = category,
+                    excludeId = productId,
+                    limit = limit
+                ).map { entities ->
+                    entities.map { it.toProduct() }
+                }
+            } else {
+                flowOf(emptyList())
+            }
+        }
     }
 }
 

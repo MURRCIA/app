@@ -13,6 +13,9 @@ interface CartItemDao {
     @Query("SELECT * FROM cart_items WHERE userId = :userId AND productId = :productId")
     suspend fun getCartItem(userId: String, productId: String): CartItemEntity?
     
+    @Query("SELECT * FROM cart_items WHERE userId = :userId AND productId = :productId AND (selectedSize = :size OR (selectedSize IS NULL AND :size IS NULL))")
+    suspend fun getCartItem(userId: String, productId: String, size: String?): CartItemEntity?
+    
     @Query("SELECT * FROM cart_items WHERE id = :cartItemId")
     suspend fun getCartItemById(cartItemId: String): CartItemEntity?
     

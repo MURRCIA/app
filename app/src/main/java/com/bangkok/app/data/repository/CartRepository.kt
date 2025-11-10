@@ -3,7 +3,9 @@ package com.bangkok.app.data.repository
 import com.bangkok.app.data.database.dao.CartItemDao
 import com.bangkok.app.data.database.dao.ProductDao
 import com.bangkok.app.data.database.entities.CartItemEntity
+import com.bangkok.app.data.database.entities.toProduct
 import com.bangkok.app.data.models.CartItem
+import com.bangkok.app.data.models.ProductSize
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.combine
@@ -24,23 +26,32 @@ class CartRepository(
             val productsMap = allProducts.associateBy { it.id }
             cartItems.mapNotNull { cartItem ->
                 productsMap[cartItem.productId]?.let { productEntity ->
+                    val selectedSize = cartItem.selectedSize?.let { sizeStr ->
+                        try {
+                            ProductSize.valueOf(sizeStr)
+                        } catch (e: IllegalArgumentException) {
+                            null
+                        }
+                    }
                     CartItem(
                         id = cartItem.id,
                         userId = cartItem.userId,
                         product = productEntity.toProduct(),
                         quantity = cartItem.quantity,
-                        addedAt = cartItem.addedAt
+                        addedAt = cartItem.addedAt,
+                        selectedSize = selectedSize
                     )
                 }
             }
         }
     }
     
-    suspend fun addToCart(userId: String, productId: String, quantity: Int = 1): Result<Unit> {
+    suspend fun addToCart(userId: String, productId: String, quantity: Int = 1, selectedSize: ProductSize? = null): Result<Unit> {
         return try {
-            val existingItem = cartItemDao.getCartItem(userId, productId)
+            val sizeString = selectedSize?.name
+            val existingItem = cartItemDao.getCartItem(userId, productId, sizeString)
             if (existingItem != null) {
-                // Si ya existe, actualizar la cantidad
+                // Si ya existe el mismo producto con la misma talla, actualizar la cantidad
                 val updatedItem = existingItem.copy(quantity = existingItem.quantity + quantity)
                 cartItemDao.updateCartItem(updatedItem)
             } else {
@@ -49,7 +60,8 @@ class CartRepository(
                     id = UUID.randomUUID().toString(),
                     userId = userId,
                     productId = productId,
-                    quantity = quantity
+                    quantity = quantity,
+                    selectedSize = sizeString
                 )
                 cartItemDao.insertCartItem(cartItem)
             }

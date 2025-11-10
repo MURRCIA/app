@@ -1,86 +1,74 @@
 [
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+        "merged": "com.bangkok.app-debug-65:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.bangkok.app-main-67:/mipmap-xxxhdpi/ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\mipmap-xxhdpi\\ic_launcher.png"
+        "merged": "com.bangkok.app-debug-65:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "com.bangkok.app-main-67:/mipmap-hdpi/ic_launcher_round.png"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\xml_data_extraction_rules.xml.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\xml\\data_extraction_rules.xml"
+        "merged": "com.bangkok.app-debug-65:/drawable_icon_black.png.flat",
+        "source": "com.bangkok.app-main-67:/drawable/icon_black.png"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\mipmap-mdpi_ic_launcher_round.png.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\mipmap-mdpi\\ic_launcher_round.png"
+        "merged": "com.bangkok.app-debug-65:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "com.bangkok.app-main-67:/mipmap-xhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\font_roboto_condensed_regular.xml.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\font\\roboto_condensed_regular.xml"
+        "merged": "com.bangkok.app-debug-65:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.bangkok.app-main-67:/mipmap-xxhdpi/ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\mipmap-xhdpi\\ic_launcher.png"
+        "merged": "com.bangkok.app-debug-65:/font_roboto_condensed_regular.xml.flat",
+        "source": "com.bangkok.app-main-67:/font/roboto_condensed_regular.xml"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\font_roboto_condensed_bold.xml.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\font\\roboto_condensed_bold.xml"
+        "merged": "com.bangkok.app-debug-65:/font_roboto_condensed_bold.xml.flat",
+        "source": "com.bangkok.app-main-67:/font/roboto_condensed_bold.xml"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\mipmap-xxxhdpi\\ic_launcher_round.png"
+        "merged": "com.bangkok.app-debug-65:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "com.bangkok.app-main-67:/mipmap-xxhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\font_roboto_condensed_medium.xml.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\font\\roboto_condensed_medium.xml"
+        "merged": "com.bangkok.app-debug-65:/font_roboto_condensed_light.xml.flat",
+        "source": "com.bangkok.app-main-67:/font/roboto_condensed_light.xml"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\mipmap-xxxhdpi\\ic_launcher.png"
+        "merged": "com.bangkok.app-debug-65:/xml_data_extraction_rules.xml.flat",
+        "source": "com.bangkok.app-main-67:/xml/data_extraction_rules.xml"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\mipmap-xxhdpi_ic_launcher_round.png.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\mipmap-xxhdpi\\ic_launcher_round.png"
+        "merged": "com.bangkok.app-debug-65:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.bangkok.app-main-67:/mipmap-xhdpi/ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\mipmap-anydpi-v26\\ic_launcher.xml"
+        "merged": "com.bangkok.app-debug-65:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "com.bangkok.app-main-67:/mipmap-mdpi/ic_launcher_round.png"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\mipmap-mdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\mipmap-mdpi\\ic_launcher.png"
+        "merged": "com.bangkok.app-debug-65:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.bangkok.app-main-67:/mipmap-hdpi/ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\font_roboto_condensed_light.xml.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\font\\roboto_condensed_light.xml"
+        "merged": "com.bangkok.app-debug-65:/drawable_logo_splash.png.flat",
+        "source": "com.bangkok.app-main-67:/drawable/logo_splash.png"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\drawable_logo_splash.png.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\drawable\\logo_splash.png"
+        "merged": "com.bangkok.app-debug-65:/font_roboto_condensed_medium.xml.flat",
+        "source": "com.bangkok.app-main-67:/font/roboto_condensed_medium.xml"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\mipmap-hdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\mipmap-hdpi\\ic_launcher.png"
+        "merged": "com.bangkok.app-debug-65:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.bangkok.app-main-67:/mipmap-mdpi/ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\drawable_icon_black.png.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\drawable\\icon_black.png"
+        "merged": "com.bangkok.app-debug-65:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "com.bangkok.app-main-67:/mipmap-xxxhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\xml_backup_rules.xml.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\xml\\backup_rules.xml"
-    },
-    {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\mipmap-hdpi_ic_launcher_round.png.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\mipmap-hdpi\\ic_launcher_round.png"
-    },
-    {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\mipmap-xhdpi_ic_launcher_round.png.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\mipmap-xhdpi\\ic_launcher_round.png"
-    },
-    {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-debug-61:\\drawable_ic_launcher_foreground.xml.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.0-milestone-1\\com.bangkok.app-main-63:\\drawable\\ic_launcher_foreground.xml"
+        "merged": "com.bangkok.app-debug-65:/xml_backup_rules.xml.flat",
+        "source": "com.bangkok.app-main-67:/xml/backup_rules.xml"
     }
 ]

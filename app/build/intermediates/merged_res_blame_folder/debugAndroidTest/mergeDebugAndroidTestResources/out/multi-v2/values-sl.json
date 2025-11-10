@@ -4,7 +4,7 @@
             "outputFile": "com.bangkok.app.test.app-mergeDebugAndroidTestResources-32:/values-sl/values-sl.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\9.0-milestone-1\\transforms\\0eb5bcdaf5d57beac8f7496295088633\\transformed\\ui-release\\res\\values-sl\\values-sl.xml",
+                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\9.0-milestone-1\\transforms\\1c6aa1dee5a19406010d4694340b1cc0\\transformed\\ui-release\\res\\values-sl\\values-sl.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\9.0-milestone-1\\transforms\\8800e62ddc7d77535c0f071545813415\\transformed\\core-1.12.0\\res\\values-sl\\values-sl.xml",
+                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\9.0-milestone-1\\transforms\\a23e64315237a6627669c9e5f02a2e82\\transformed\\core-1.12.0\\res\\values-sl\\values-sl.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

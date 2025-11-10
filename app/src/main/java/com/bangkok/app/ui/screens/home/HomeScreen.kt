@@ -36,12 +36,13 @@ fun HomeScreen(
     onCategoryClick: (String) -> Unit = {},
     onProductClick: (String) -> Unit = {},
     onProfileClick: () -> Unit = {},
-    onCartClick: () -> Unit = {}
+    onCartClick: () -> Unit = {},
+    onAdminClick: () -> Unit = {}
 ) {
     val viewModel: HomeViewModel = koinInject()
     val categories by viewModel.categories.collectAsState()
     val products by viewModel.products.collectAsState()
-    val featuredProducts by viewModel.featuredProducts.collectAsState()
+    val isAdmin by viewModel.isAdmin.collectAsState()
     
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -50,10 +51,15 @@ fun HomeScreen(
         drawerState = drawerState,
         drawerContent = {
             DrawerContent(
+                isAdmin = isAdmin,
                 onCloseDrawer = { scope.launch { drawerState.close() } },
                 onProfileClick = {
                     scope.launch { drawerState.close() }
                     onProfileClick()
+                },
+                onAdminClick = {
+                    scope.launch { drawerState.close() }
+                    onAdminClick()
                 }
             )
         }
@@ -226,8 +232,10 @@ fun CustomTopBar(
 
 @Composable
 fun DrawerContent(
+    isAdmin: Boolean,
     onCloseDrawer: () -> Unit,
-    onProfileClick: () -> Unit
+    onProfileClick: () -> Unit,
+    onAdminClick: () -> Unit
 ) {
     ModalDrawerSheet(
         drawerContainerColor = Color.White
@@ -276,6 +284,23 @@ fun DrawerContent(
                 onCloseDrawer()
             }
         )
+        
+        // Opción de administración solo para admin
+        if (isAdmin) {
+            Divider(
+                modifier = Modifier.padding(vertical = 8.dp),
+                color = Color.Black.copy(alpha = 0.1f)
+            )
+            
+            DrawerMenuItem(
+                icon = Icons.Default.AdminPanelSettings,
+                title = "Administración",
+                onClick = {
+                    onAdminClick()
+                    onCloseDrawer()
+                }
+            )
+        }
         
         Divider(
             modifier = Modifier.padding(vertical = 8.dp),

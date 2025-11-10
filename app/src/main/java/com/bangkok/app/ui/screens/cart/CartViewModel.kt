@@ -23,43 +23,48 @@ class CartViewModel(
     private val sessionManager: SessionManager
 ) : ViewModel() {
     
-    private val userId: String?
-        get() = sessionManager.getUserId()
+    private fun getUserId(): String? = sessionManager.getUserId()
     
-    val cartItems: StateFlow<List<CartItem>> = if (userId != null) {
-        cartRepository.getCartItems(userId)
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000),
-                initialValue = emptyList()
-            )
-    } else {
-        kotlinx.coroutines.flow.MutableStateFlow(emptyList<CartItem>())
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000),
-                initialValue = emptyList()
-            )
+    val cartItems: StateFlow<List<CartItem>> = run {
+        val currentUserId = getUserId()
+        if (currentUserId != null) {
+            cartRepository.getCartItems(currentUserId)
+                .stateIn(
+                    scope = viewModelScope,
+                    started = SharingStarted.WhileSubscribed(5000),
+                    initialValue = emptyList()
+                )
+        } else {
+            kotlinx.coroutines.flow.MutableStateFlow(emptyList<CartItem>())
+                .stateIn(
+                    scope = viewModelScope,
+                    started = SharingStarted.WhileSubscribed(5000),
+                    initialValue = emptyList()
+                )
+        }
     }
     
-    val total: StateFlow<Double> = if (userId != null) {
-        cartRepository.getCartTotal(userId)
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000),
-                initialValue = 0.0
-            )
-    } else {
-        kotlinx.coroutines.flow.MutableStateFlow(0.0)
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000),
-                initialValue = 0.0
-            )
+    val total: StateFlow<Double> = run {
+        val currentUserId = getUserId()
+        if (currentUserId != null) {
+            cartRepository.getCartTotal(currentUserId)
+                .stateIn(
+                    scope = viewModelScope,
+                    started = SharingStarted.WhileSubscribed(5000),
+                    initialValue = 0.0
+                )
+        } else {
+            kotlinx.coroutines.flow.MutableStateFlow(0.0)
+                .stateIn(
+                    scope = viewModelScope,
+                    started = SharingStarted.WhileSubscribed(5000),
+                    initialValue = 0.0
+                )
+        }
     }
     
     fun addToCart(productId: String, quantity: Int = 1) {
-        val currentUserId = userId ?: return
+        val currentUserId = getUserId() ?: return
         viewModelScope.launch {
             cartRepository.addToCart(currentUserId, productId, quantity)
         }
@@ -78,7 +83,7 @@ class CartViewModel(
     }
     
     fun clearCart() {
-        val currentUserId = userId ?: return
+        val currentUserId = getUserId() ?: return
         viewModelScope.launch {
             cartRepository.clearCart(currentUserId)
         }
