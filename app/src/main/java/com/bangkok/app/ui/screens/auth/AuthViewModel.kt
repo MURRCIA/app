@@ -5,8 +5,13 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.bangkok.app.data.repository.UserRepository
+import com.bangkok.app.data.SessionManager
+import java.util.UUID
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 data class AuthUiState(
     val email: String = "",
@@ -21,10 +26,15 @@ data class AuthUiState(
     val passwordError: String? = null,
     val confirmPasswordError: String? = null,
     val fullNameError: String? = null,
-    val phoneError: String? = null
+    val phoneError: String? = null,
+    val loginSuccess: Boolean = false,
+    val registerSuccess: Boolean = false
 )
 
-class AuthViewModel : ViewModel() {
+class AuthViewModel(
+    private val userRepository: UserRepository,
+    private val sessionManager: SessionManager
+) : ViewModel() {
     private val _uiState = MutableStateFlow(AuthUiState())
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
 
@@ -70,18 +80,52 @@ class AuthViewModel : ViewModel() {
     fun login() {
         val currentState = _uiState.value
         
-        // Por ahora, aceptar cualquier credencial (sin validaciones)
-        // TODO: Implementar validaciones en etapas futuras
+        // Validaciones básicas
+        val emailError = if (currentState.email.isBlank()) {
+            "El correo es requerido"
+        } else if (!isValidEmail(currentState.email)) {
+            "Correo inválido"
+        } else null
+
+        val passwordError = if (currentState.password.isBlank()) {
+            "La contraseña es requerida"
+        } else null
+
+        if (emailError != null || passwordError != null) {
+            _uiState.value = currentState.copy(
+                emailError = emailError,
+                passwordError = passwordError
+            )
+            return
+        }
         
-        // Simular login rápido
         _uiState.value = currentState.copy(isLoading = true, errorMessage = null)
         
         viewModelScope.launch {
-            delay(500) // Breve delay para mostrar loading
-            
-            // Siempre exitoso por ahora
-            _uiState.value = currentState.copy(isLoading = false)
-            // La navegación se maneja en LoginScreen con onLoginSuccess
+            try {
+                val user = userRepository.loginUser(currentState.email, currentState.password)
+                if (user != null) {
+                    // Guardar sesión
+                    sessionManager.saveUserId(user.id)
+                    _uiState.value = currentState.copy(
+                        isLoading = false,
+                        loginSuccess = true,
+                        errorMessage = null
+                    )
+                } else {
+                    _uiState.value = currentState.copy(
+                        isLoading = false,
+                        errorMessage = "Credenciales incorrectas",
+                        loginSuccess = false
+                    )
+                }
+            } catch (e: Exception) {
+                _uiState.value = currentState.copy(
+                    isLoading = false,
+                    errorMessage = "Error al iniciar sesión: ${e.message}",
+                    loginSuccess = false
+                )
+            }
         }
     }
 
@@ -127,21 +171,46 @@ class AuthViewModel : ViewModel() {
             return
         }
 
-        // Simular registro
         _uiState.value = currentState.copy(isLoading = true, errorMessage = null)
         
         viewModelScope.launch {
-            delay(2000) // Simular llamada a API
-            
-            val success = true // En una app real, esto vendría del resultado de la API
-            
-            if (success) {
-                _uiState.value = currentState.copy(isLoading = false)
-                // En una app real, aquí se navegaría al home o se enviaría email de verificación
-            } else {
+            try {
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val registrationDate = dateFormat.format(Date())
+                
+                val newUser = com.bangkok.app.data.models.User(
+                    id = UUID.randomUUID().toString(),
+                    fullName = currentState.fullName,
+                    email = currentState.email,
+                    password = currentState.password,
+                    phone = currentState.phone,
+                    registrationDate = registrationDate,
+                    isEmailVerified = false
+                )
+                
+                val result = userRepository.registerUser(newUser)
+                if (result.isSuccess) {
+                    val user = result.getOrNull()!!
+                    // Guardar sesión
+                    sessionManager.saveUserId(user.id)
+                    _uiState.value = currentState.copy(
+                        isLoading = false,
+                        registerSuccess = true,
+                        errorMessage = null
+                    )
+                } else {
+                    val exception = result.exceptionOrNull()
+                    _uiState.value = currentState.copy(
+                        isLoading = false,
+                        errorMessage = exception?.message ?: "Error al crear la cuenta",
+                        registerSuccess = false
+                    )
+                }
+            } catch (e: Exception) {
                 _uiState.value = currentState.copy(
                     isLoading = false,
-                    errorMessage = "Error al crear la cuenta. Intenta de nuevo."
+                    errorMessage = "Error al crear la cuenta: ${e.message}",
+                    registerSuccess = false
                 )
             }
         }

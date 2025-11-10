@@ -205,10 +205,10 @@ fun ProductCard(
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFF121212)
+@Preview(showBackground = true)
 @Composable
 fun ProductCardPreview() {
-    BangkokTheme(darkTheme = true) {
+    BangkokTheme {
         Row(
             modifier = Modifier.padding(16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)

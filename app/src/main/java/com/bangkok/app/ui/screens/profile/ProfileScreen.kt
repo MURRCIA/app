@@ -22,10 +22,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bangkok.app.ui.components.BangkokTopBar
 import com.bangkok.app.ui.theme.BangkokTheme
-import com.bangkok.app.data.models.MockUserData
+import org.koin.compose.koinInject
 
 @Composable
 fun ProfileScreen(
@@ -33,9 +32,9 @@ fun ProfileScreen(
     onOrdersClick: () -> Unit,
     onAddressesClick: () -> Unit,
     onPaymentMethodsClick: () -> Unit,
-    onLogoutClick: () -> Unit,
-    viewModel: ProfileViewModel = viewModel()
+    onLogoutClick: () -> Unit
 ) {
+    val viewModel: ProfileViewModel = koinInject()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Column(
@@ -232,7 +231,10 @@ fun ProfileActions(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onLogoutClick() },
+                .clickable { 
+                    viewModel.logout()
+                    onLogoutClick()
+                },
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.1f)
             ),

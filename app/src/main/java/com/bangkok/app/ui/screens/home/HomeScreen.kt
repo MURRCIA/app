@@ -22,20 +22,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bangkok.app.R
-import com.bangkok.app.data.models.MockCategoryData
-import com.bangkok.app.data.models.MockProductData
 import com.bangkok.app.ui.components.CategoryCard
 import com.bangkok.app.ui.components.ProductCard
 import com.bangkok.app.ui.theme.BangkokTheme
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     onCategoryClick: (String) -> Unit = {},
     onProductClick: (String) -> Unit = {},
-    onProfileClick: () -> Unit = {}
+    onProfileClick: () -> Unit = {},
+    onCartClick: () -> Unit = {}
 ) {
+    val viewModel: HomeViewModel = koinInject()
+    val categories by viewModel.categories.collectAsState()
+    val products by viewModel.products.collectAsState()
+    val featuredProducts by viewModel.featuredProducts.collectAsState()
+    
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -59,7 +66,8 @@ fun HomeScreen(
             // Custom TopBar con logo y menu
             CustomTopBar(
                 onMenuClick = { scope.launch { drawerState.open() } },
-                onProfileClick = onProfileClick
+                onProfileClick = onProfileClick,
+                onCartClick = onCartClick
             )
 
         LazyColumn(
@@ -86,7 +94,7 @@ fun HomeScreen(
                     contentPadding = PaddingValues(horizontal = 16.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    items(MockCategoryData.categories) { category ->
+                    items(categories) { category ->
                         CategoryCard(
                             category = category,
                             onClick = { onCategoryClick(category.id) },
@@ -131,14 +139,13 @@ fun HomeScreen(
 
             // Grid de productos (2 columnas)
             item {
-                // Usamos un Box con altura fija para el grid dentro del LazyColumn
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    MockProductData.sampleProducts.chunked(2).forEach { rowProducts ->
+                    products.chunked(2).forEach { rowProducts ->
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -172,14 +179,15 @@ fun HomeScreen(
 @Composable
 fun CustomTopBar(
     onMenuClick: () -> Unit,
-    onProfileClick: () -> Unit
+    onProfileClick: () -> Unit,
+    onCartClick: () -> Unit = {}
 ) {
     CenterAlignedTopAppBar(
         title = {
             Image(
                 painter = painterResource(id = R.drawable.logo_splash),
                 contentDescription = "Bangkok Logo",
-                modifier = Modifier.height(100.dp)
+                modifier = Modifier.height(150.dp)
             )
         },
         navigationIcon = {
@@ -192,6 +200,13 @@ fun CustomTopBar(
             }
         },
         actions = {
+            IconButton(onClick = onCartClick) {
+                Icon(
+                    imageVector = Icons.Default.ShoppingCart,
+                    contentDescription = "Carrito",
+                    tint = Color.White
+                )
+            }
             IconButton(onClick = onProfileClick) {
                 Icon(
                     imageVector = Icons.Default.Person,
@@ -228,7 +243,7 @@ fun DrawerContent(
             Image(
                 painter = painterResource(id = R.drawable.logo_splash),
                 contentDescription = "Bangkok Logo",
-                modifier = Modifier.size(220.dp)
+                modifier = Modifier.size(160.dp)
             )
         }
         
@@ -244,7 +259,7 @@ fun DrawerContent(
         DrawerMenuItem(
             icon = Icons.Default.ShoppingCart,
             title = "Carrito",
-            onClick = { /* TODO */ onCloseDrawer() }
+            onClick = { /* TODO: Navigate to cart */ onCloseDrawer() }
         )
         
         DrawerMenuItem(
@@ -323,7 +338,7 @@ fun DrawerMenuItem(
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    BangkokTheme(darkTheme = false) {
+    BangkokTheme {
         HomeScreen()
     }
 }

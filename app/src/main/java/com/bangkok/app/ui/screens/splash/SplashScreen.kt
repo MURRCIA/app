@@ -65,7 +65,8 @@ fun SplashContent(
                 painter = painterResource(id = R.drawable.logo_splash),
                 contentDescription = "Bangkok Logo",
                 modifier = Modifier
-                    .size(200.dp)
+                    .width(400.dp)
+                    .height(300.dp)
                     .alpha(alpha),
                 contentScale = ContentScale.Fit
             )

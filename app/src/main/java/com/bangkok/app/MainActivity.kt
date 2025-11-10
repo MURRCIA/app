@@ -20,7 +20,13 @@ import com.bangkok.app.ui.screens.profile.ProfileScreen
 import com.bangkok.app.ui.screens.profile.ProfileViewModel
 import com.bangkok.app.ui.screens.splash.SplashScreen
 import com.bangkok.app.ui.screens.welcome.WelcomeScreen
+import com.bangkok.app.ui.screens.cart.CartScreen
+import com.bangkok.app.ui.screens.products.ProductListScreen
 import com.bangkok.app.ui.theme.BangkokTheme
+import com.bangkok.app.data.database.AppDatabase
+import com.bangkok.app.data.SessionManager
+import com.bangkok.app.data.repository.*
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
@@ -32,11 +38,12 @@ class MainActivity : ComponentActivity() {
         
         // Configurar Koin para inyección de dependencias
         startKoin {
-            modules(appModule)
+            androidContext(this@MainActivity)
+            modules(databaseModule, repositoryModule, appModule)
         }
         
         setContent {
-            BangkokTheme(darkTheme = true) {
+            BangkokTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -48,10 +55,31 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// Módulo de Koin para inyección de dependencias
+// Módulo de base de datos
+val databaseModule = module {
+    single { AppDatabase.getDatabase(androidContext()) }
+    single { get<AppDatabase>().productDao() }
+    single { get<AppDatabase>().categoryDao() }
+    single { get<AppDatabase>().userDao() }
+    single { get<AppDatabase>().cartItemDao() }
+}
+
+// Módulo de repositorios
+val repositoryModule = module {
+    single { ProductRepository(get()) }
+    single { CategoryRepository(get()) }
+    single { UserRepository(get()) }
+    single { CartRepository(get(), get()) }
+    single { SessionManager(androidContext()) }
+}
+
+// Módulo de ViewModels
 val appModule = module {
-    viewModel { AuthViewModel() }
-    viewModel { ProfileViewModel() }
+    viewModel { com.bangkok.app.ui.screens.auth.AuthViewModel(get(), get()) }
+    viewModel { com.bangkok.app.ui.screens.profile.ProfileViewModel(get(), get()) }
+    viewModel { com.bangkok.app.ui.screens.home.HomeViewModel(get(), get()) }
+    viewModel { com.bangkok.app.ui.screens.cart.CartViewModel(get(), get()) }
+    viewModel { com.bangkok.app.ui.screens.products.ProductListViewModel(get()) }
 }
 
 @Composable
@@ -86,13 +114,42 @@ fun BangkokNavigation() {
         composable("home") {
             HomeScreen(
                 onCategoryClick = { categoryId ->
-                    // TODO: Navegar a pantalla de categoría
+                    navController.navigate("products?categoryId=$categoryId") {
+                        launchSingleTop = true
+                    }
                 },
                 onProductClick = { productId ->
-                    // TODO: Navegar a detalle del producto
+                    navController.navigate("products") {
+                        launchSingleTop = true
+                    }
                 },
                 onProfileClick = {
                     navController.navigate("profile")
+                },
+                onCartClick = {
+                    navController.navigate("cart")
+                }
+            )
+        }
+        
+        composable("cart") {
+            CartScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onCheckoutClick = {
+                    // TODO: Implementar checkout
+                }
+            )
+        }
+        
+        composable("products") {
+            ProductListScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onProductClick = { productId ->
+                    // TODO: Navegar a detalle del producto
                 }
             )
         }

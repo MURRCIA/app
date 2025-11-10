@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
         }
         
         setContent {
-            BangkokTheme(darkTheme = true) {
+            BangkokTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

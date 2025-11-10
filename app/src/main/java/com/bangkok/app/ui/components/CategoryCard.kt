@@ -102,10 +102,10 @@ fun CategoryCard(
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFF121212)
+@Preview(showBackground = true)
 @Composable
 fun CategoryCardPreview() {
-    BangkokTheme(darkTheme = true) {
+    BangkokTheme {
         Column(
             modifier = Modifier
                 .fillMaxWidth()

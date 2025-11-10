@@ -23,23 +23,31 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bangkok.app.ui.components.BangkokButton
 import com.bangkok.app.ui.components.BangkokTextField
 import com.bangkok.app.ui.components.BangkokTopBar
 import com.bangkok.app.ui.theme.BangkokTheme
+import org.koin.compose.koinInject
+import androidx.compose.runtime.LaunchedEffect
 
 @Composable
 fun RegisterScreen(
     onRegisterSuccess: () -> Unit,
     onLoginClick: () -> Unit,
-    onBackClick: () -> Unit,
-    viewModel: AuthViewModel = viewModel()
+    onBackClick: () -> Unit
 ) {
+    val viewModel: AuthViewModel = koinInject()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
     var passwordVisible by remember { mutableStateOf(false) }
     var confirmPasswordVisible by remember { mutableStateOf(false) }
+    
+    // Navegar automáticamente cuando el registro sea exitoso
+    LaunchedEffect(uiState.registerSuccess) {
+        if (uiState.registerSuccess) {
+            onRegisterSuccess()
+        }
+    }
 
     Column(
         modifier = Modifier

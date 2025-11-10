@@ -6,7 +6,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import com.bangkok.app.data.models.MockUserData
+import com.bangkok.app.data.repository.UserRepository
+import com.bangkok.app.data.SessionManager
 
 data class ProfileUiState(
     val user: com.bangkok.app.data.models.User? = null,
@@ -14,7 +15,10 @@ data class ProfileUiState(
     val errorMessage: String? = null
 )
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel(
+    private val userRepository: UserRepository,
+    private val sessionManager: SessionManager
+) : ViewModel() {
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
 
@@ -26,14 +30,29 @@ class ProfileViewModel : ViewModel() {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
             
-            // Simular carga de datos del usuario
-            kotlinx.coroutines.delay(1000)
-            
-            // Usar datos mock por ahora
-            _uiState.value = _uiState.value.copy(
-                user = MockUserData.sampleUser,
-                isLoading = false
-            )
+            try {
+                val userId = sessionManager.getUserId()
+                if (userId != null) {
+                    val user = userRepository.getUserById(userId)
+                    _uiState.value = _uiState.value.copy(
+                        user = user,
+                        isLoading = false,
+                        errorMessage = if (user == null) "Usuario no encontrado" else null
+                    )
+                } else {
+                    _uiState.value = _uiState.value.copy(
+                        user = null,
+                        isLoading = false,
+                        errorMessage = "No hay sesión activa"
+                    )
+                }
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(
+                    user = null,
+                    isLoading = false,
+                    errorMessage = "Error al cargar perfil: ${e.message}"
+                )
+            }
         }
     }
 
@@ -41,13 +60,18 @@ class ProfileViewModel : ViewModel() {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
             
-            // Simular logout
-            kotlinx.coroutines.delay(500)
-            
-            _uiState.value = _uiState.value.copy(
-                user = null,
-                isLoading = false
-            )
+            try {
+                sessionManager.logout()
+                _uiState.value = _uiState.value.copy(
+                    user = null,
+                    isLoading = false
+                )
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    errorMessage = "Error al cerrar sesión: ${e.message}"
+                )
+            }
         }
     }
 

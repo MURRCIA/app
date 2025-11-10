@@ -25,28 +25,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bangkok.app.ui.theme.BangkokTheme
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bangkok.app.ui.components.BangkokButton
 import com.bangkok.app.ui.components.BangkokTextField
 import com.bangkok.app.ui.components.BangkokTopBar
 import com.bangkok.app.ui.theme.BangkokGrey50
-import com.bangkok.app.ui.theme.BangkokTheme         
+import com.bangkok.app.ui.theme.BangkokTheme
+import org.koin.compose.koinInject
 
 @Composable
 fun LoginScreen(
     onLoginSuccess: () -> Unit,
     onRegisterClick: () -> Unit,
     onForgotPasswordClick: () -> Unit,
-    onBackClick: () -> Unit,
-    viewModel: AuthViewModel = viewModel()
+    onBackClick: () -> Unit
 ) {
+    val viewModel: AuthViewModel = koinInject()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
     var passwordVisible by remember { mutableStateOf(false) }
     
     // Navegar automáticamente cuando el login sea exitoso
-    LaunchedEffect(uiState.isLoading) {
-        if (!uiState.isLoading && uiState.email.isNotEmpty() && uiState.errorMessage == null) {
+    LaunchedEffect(uiState.loginSuccess) {
+        if (uiState.loginSuccess) {
             onLoginSuccess()
         }
     }
