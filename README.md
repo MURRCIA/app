@@ -107,7 +107,7 @@ La aplicación usa una base de datos local con las siguientes tablas:
 ### Paso 2: Abrir el Proyecto
 
 1. **Clonar o Descargar el Proyecto**
-   - Si el proyecto está en Git, clónalo con: `git clone [URL del repositorio]`
+   - Si el proyecto está en Git, clónalo con: `git clone [https://github.com/MURRCIA/app]`
    - O descarga el proyecto y extrae los archivos
 
 2. **Abrir en Android Studio**
