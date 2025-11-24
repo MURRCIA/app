@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -37,7 +38,8 @@ fun HomeScreen(
     onProductClick: (String) -> Unit = {},
     onProfileClick: () -> Unit = {},
     onCartClick: () -> Unit = {},
-    onAdminClick: () -> Unit = {}
+    onAdminClick: () -> Unit = {},
+    onStoresClick: () -> Unit = {}
 ) {
     val viewModel: HomeViewModel = koinInject()
     val categories by viewModel.categories.collectAsState()
@@ -60,6 +62,10 @@ fun HomeScreen(
                 onAdminClick = {
                     scope.launch { drawerState.close() }
                     onAdminClick()
+                },
+                onStoresClick = {
+                    scope.launch { drawerState.close() }
+                    onStoresClick()
                 }
             )
         }
@@ -108,6 +114,32 @@ fun HomeScreen(
                         )
                     }
                 }
+            }
+
+            // Espaciador
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
+            }
+
+            // Sección de Tiendas
+            item {
+                Text(
+                    text = "TIENDAS",
+                    style = MaterialTheme.typography.headlineSmall.copy(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                        letterSpacing = 1.sp
+                    ),
+                    color = Color.Black,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                )
+            }
+
+            item {
+                StoreCardPreview(
+                    onStoresClick = onStoresClick,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
             }
 
             // Espaciador
@@ -226,7 +258,8 @@ fun CustomTopBar(
             titleContentColor = Color.White,
             navigationIconContentColor = Color.White,
             actionIconContentColor = Color.White
-        )
+        ),
+        modifier = Modifier.fillMaxWidth()
     )
 }
 
@@ -235,7 +268,8 @@ fun DrawerContent(
     isAdmin: Boolean,
     onCloseDrawer: () -> Unit,
     onProfileClick: () -> Unit,
-    onAdminClick: () -> Unit
+    onAdminClick: () -> Unit,
+    onStoresClick: () -> Unit = {}
 ) {
     ModalDrawerSheet(
         drawerContainerColor = Color.White
@@ -268,6 +302,15 @@ fun DrawerContent(
             icon = Icons.Default.ShoppingCart,
             title = "Carrito",
             onClick = { /* TODO: Navigate to cart */ onCloseDrawer() }
+        )
+        
+        DrawerMenuItem(
+            icon = Icons.Default.LocationOn,
+            title = "Tiendas",
+            onClick = {
+                onStoresClick()
+                onCloseDrawer()
+            }
         )
         
         DrawerMenuItem(
@@ -357,6 +400,63 @@ fun DrawerMenuItem(
             ),
             color = Color.Black
         )
+    }
+}
+
+@Composable
+fun StoreCardPreview(
+    onStoresClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(180.dp)
+            .clickable(onClick = onStoresClick),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.Black
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(20.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Encuentra nuestras tiendas",
+                        style = MaterialTheme.typography.headlineSmall.copy(
+                            fontWeight = FontWeight.Bold
+                        ),
+                        color = Color.White
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Visítanos en nuestras sucursales",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.White.copy(alpha = 0.8f)
+                    )
+                }
+                
+                Icon(
+                    imageVector = Icons.Default.LocationOn,
+                    contentDescription = "Tiendas",
+                    tint = Color.White,
+                    modifier = Modifier.size(48.dp)
+                )
+            }
+        }
     }
 }
 

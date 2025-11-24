@@ -61,7 +61,8 @@ fun CategoryCard(
                     ) {
                         CircularProgressIndicator(
                             modifier = Modifier.size(40.dp),
-                            color = MaterialTheme.colorScheme.primary
+                            color = MaterialTheme.colorScheme.primary,
+                            strokeWidth = 4.dp
                         )
                     }
                 }

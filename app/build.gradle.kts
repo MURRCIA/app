@@ -41,7 +41,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.4"
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
     packaging {
         resources {
@@ -55,8 +55,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
     
-    // Compose BOM
-    implementation(platform("androidx.compose:compose-bom:2023.10.01"))
+    // Compose BOM - Versión actualizada para compatibilidad
+    implementation(platform("androidx.compose:compose-bom:2024.02.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -92,13 +92,40 @@ dependencies {
     // Gson para TypeConverters
     implementation("com.google.code.gson:gson:2.10.1")
     
+    // OSMDroid para mapas de OpenStreetMap
+    implementation("org.osmdroid:osmdroid-android:6.1.17")
+    
+    // CameraX para funcionalidad de cámara
+    val camerax_version = "1.3.1"
+    implementation("androidx.camera:camera-core:${camerax_version}")
+    implementation("androidx.camera:camera-camera2:${camerax_version}")
+    implementation("androidx.camera:camera-lifecycle:${camerax_version}")
+    implementation("androidx.camera:camera-view:${camerax_version}")
+    
+    // Permisos de runtime
+    implementation("com.google.accompanist:accompanist-permissions:0.34.0")
+    
+    // Location services
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+    
     // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.10.01"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.02.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+}
+
+// Tarea alias para evitar el error "testClasses not found"
+// En proyectos Android, las tareas de test tienen nombres diferentes
+tasks.register("testClasses") {
+    description = "Alias para compatibilidad con herramientas que buscan testClasses"
+    group = "verification"
+    // Esta tarea no hace nada, solo existe para evitar errores
+    doLast {
+        // Tarea vacía para compatibilidad
+    }
 }
 

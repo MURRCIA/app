@@ -1,20 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.bangkok.app-mergeDebugResources-63:/values-v16/values-v16.xml",
+            "outputFile": "com.bangkok.app-mergeDebugResources-71:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\9.0-milestone-1\\transforms\\a23e64315237a6627669c9e5f02a2e82\\transformed\\core-1.12.0\\res\\values-v16\\values-v16.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "65",
-                        "endOffsets": "116"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\9.0-milestone-1\\transforms\\ef168bd17502850e70e13f762e5668a4\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\9.0-milestone-1\\transforms\\52efeaa9a5f923211ca65f1157311869\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -30,6 +20,16 @@
                         "endLines": "6",
                         "endColumns": "12",
                         "endOffsets": "289"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\ASUS\\.gradle\\caches\\9.0-milestone-1\\transforms\\2e18e3ea9af3b3ca8ded18c51b7d6558\\transformed\\core-1.12.0\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
                     }
                 }
             ]

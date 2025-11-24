@@ -24,6 +24,7 @@ import com.bangkok.app.ui.screens.cart.CartScreen
 import com.bangkok.app.ui.screens.products.ProductListScreen
 import com.bangkok.app.ui.screens.products.ProductDetailScreen
 import com.bangkok.app.ui.screens.admin.ProductAdminScreen
+import com.bangkok.app.ui.screens.stores.StoresScreen
 import com.bangkok.app.ui.theme.BangkokTheme
 import com.bangkok.app.data.database.AppDatabase
 import com.bangkok.app.data.SessionManager
@@ -83,6 +84,7 @@ val appModule = module {
     viewModel { com.bangkok.app.ui.screens.cart.CartViewModel(get(), get()) }
     viewModel { com.bangkok.app.ui.screens.products.ProductListViewModel(get()) }
     viewModel { com.bangkok.app.ui.screens.products.ProductDetailViewModel(get(), get(), get()) }
+    viewModel { com.bangkok.app.ui.screens.stores.StoresViewModel() }
 }
 
 @Composable
@@ -134,6 +136,11 @@ fun BangkokNavigation() {
                 },
                 onAdminClick = {
                     navController.navigate("product-admin")
+                },
+                onStoresClick = {
+                    navController.navigate("stores") {
+                        launchSingleTop = true
+                    }
                 }
             )
         }
@@ -242,6 +249,14 @@ fun BangkokNavigation() {
         
         composable("product-admin") {
             ProductAdminScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        
+        composable("stores") {
+            StoresScreen(
                 onBackClick = {
                     navController.popBackStack()
                 }

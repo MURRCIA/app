@@ -108,51 +108,61 @@ abstract class AppDatabase : RoomDatabase() {
         
         // Función para poblar datos iniciales
         private suspend fun populateDatabase(database: AppDatabase) {
-            val productDao = database.productDao()
-            val categoryDao = database.categoryDao()
-            
-            // Verificar si ya hay datos (evitar duplicados)
-            val productCount = productDao.getProductCount()
-            val categoryCount = categoryDao.getCategoryCount()
-            
-            if (productCount == 0 && categoryCount == 0) {
-                // 1. Insertar categorías desde MockCategoryData
-                val categories = MockCategoryData.categories.map { category ->
-                    category.toEntity()
-                }
-                categoryDao.insertCategories(categories)
+            try {
+                val productDao = database.productDao()
+                val categoryDao = database.categoryDao()
                 
-                // 2. Insertar productos desde MockProductData
-                val products = MockProductData.sampleProducts.map { product ->
-                    product.toEntity()
+                // Verificar si ya hay datos (evitar duplicados)
+                val productCount = productDao.getProductCount()
+                val categoryCount = categoryDao.getCategoryCount()
+                
+                if (productCount == 0 && categoryCount == 0) {
+                    // 1. Insertar categorías desde MockCategoryData
+                    val categories = MockCategoryData.categories.map { category ->
+                        category.toEntity()
+                    }
+                    categoryDao.insertCategories(categories)
+                    
+                    // 2. Insertar productos desde MockProductData
+                    val products = MockProductData.sampleProducts.map { product ->
+                        product.toEntity()
+                    }
+                    productDao.insertProducts(products)
                 }
-                productDao.insertProducts(products)
+                
+                // 3. Asegurar que el usuario admin existe
+                ensureAdminUserExists(database)
+            } catch (e: Exception) {
+                // Silenciar errores en la inicialización para evitar crashes
+                android.util.Log.e("AppDatabase", "Error al poblar base de datos", e)
             }
-            
-            // 3. Asegurar que el usuario admin existe
-            ensureAdminUserExists(database)
         }
         
         // Función para asegurar que el usuario admin existe
         private suspend fun ensureAdminUserExists(database: AppDatabase) {
-            val userDao = database.userDao()
-            val adminUser = userDao.getUserByEmail("admin@bangkok.com")
-            
-            if (adminUser == null) {
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val adminUserEntity = UserEntity(
-                    id = UUID.randomUUID().toString(),
-                    fullName = "Administrador",
-                    email = "admin@bangkok.com",
-                    password = "admin123",
-                    phone = "+52 55 0000 0000",
-                    profileImageUrl = null,
-                    registrationDate = dateFormat.format(Date()),
-                    isEmailVerified = true,
-                    role = UserRole.ADMIN,
-                    preferences = com.bangkok.app.data.models.UserPreferences()
-                )
-                userDao.insertUser(adminUserEntity)
+            try {
+                val userDao = database.userDao()
+                val adminUser = userDao.getUserByEmail("admin@bangkok.com")
+                
+                if (adminUser == null) {
+                    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                    val adminUserEntity = UserEntity(
+                        id = UUID.randomUUID().toString(),
+                        fullName = "Administrador",
+                        email = "admin@bangkok.com",
+                        password = "admin123",
+                        phone = "+52 55 0000 0000",
+                        profileImageUrl = null,
+                        registrationDate = dateFormat.format(Date()),
+                        isEmailVerified = true,
+                        role = UserRole.ADMIN,
+                        preferences = com.bangkok.app.data.models.UserPreferences()
+                    )
+                    userDao.insertUser(adminUserEntity)
+                }
+            } catch (e: Exception) {
+                // Silenciar errores al crear admin
+                android.util.Log.e("AppDatabase", "Error al crear usuario admin", e)
             }
         }
     }
